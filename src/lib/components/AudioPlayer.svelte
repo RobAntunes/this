@@ -4,10 +4,9 @@
 		autoplay: boolean;
 	}>();
 
-	let audio: HTMLAudioElement | null;
+	let audio: HTMLAudioElement | undefined = $state(new Audio(src.data?.signedUrl))
 
 	$effect(() => {
-        audio = new Audio(src.data?.signedUrl as string);
 		console.log(src, audio);
 
 		if (autoplay) {

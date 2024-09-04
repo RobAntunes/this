@@ -1,0 +1,11 @@
+Model Information:
+* title:	The Thinker (Le Penseur)
+* source:	https://sketchfab.com/3d-models/the-thinker-le-penseur-62bdca8cb6fc443b931c2963b70ffc84
+* author:	urbandave (https://sketchfab.com/urbandave)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "The Thinker (Le Penseur)" (https://sketchfab.com/3d-models/the-thinker-le-penseur-62bdca8cb6fc443b931c2963b70ffc84) by urbandave (https://sketchfab.com/urbandave) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

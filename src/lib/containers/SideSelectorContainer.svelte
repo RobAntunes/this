@@ -6,5 +6,7 @@
 </script>
 
 <div class={className} role="list">
-	{@render children()}
+	{#if children}
+		<!-- {children()} -->
+	{/if}
 </div>

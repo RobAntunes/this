@@ -4,58 +4,55 @@
 	import { fade } from 'svelte/transition';
 	import '../app.css';
 	import { supabase } from '$lib/supabaseClient';
+	import hero from '/src/assets/hero.webp';
 
 	const { data } = getDrawerData();
 
 	let ref: any;
-	let audio: HTMLAudioElement | null = null;
-	let input: HTMLInputElement | null = null;
+	let audio: HTMLAudioElement | null = $state(null);
+	let input: HTMLInputElement | null = $state(null);
 	let audioFlag: boolean = $state(false);
 	let loc = $state(0);
-
+	let { children } = $props();
 
 	function secondsToTime(secs: number) {
-        let minutes = Math.floor(secs / 60);
-        let seconds = Math.floor(secs % 60);
-        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    }
-
+		let minutes = Math.floor(secs / 60);
+		let seconds = Math.floor(secs % 60);
+		return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+	}
 
 	let changeHandler: () => void;
 
 	$effect(() => {
 		changeHandler = () => {
-			loc = ((audio?.['duration'] ?? 1) / (audio?.['currentTime'] ?? 1));
-			console.log('1', loc)
+			loc = (audio?.['duration'] ?? 1) / (audio?.['currentTime'] ?? 1);
+			console.log('1', loc);
 		};
 		console.log('2', loc);
 
-		input?.addEventListener('change', changeHandler);
+		// input?.addEventListener('change', changeHandler);
 
-		return () => {
-			input?.removeEventListener('change', changeHandler);
-		};
+		// return () => {
+		// 	input?.removeEventListener('change', changeHandler);
+		// };
 	});
 </script>
 
+<!-- svelte-ignore css_unused_selector -->
 <div class="font-poppins">
 	<Drawer className="p-12 fixed left-0 z-[999] shadow-2xl">
 		<div bind:this={ref}>
-			<p
-				class="font-unbounded text-gray text-[32px] text-center"
-				in:fade={{ delay: 400 }}
-				out:fade={{ delay: 0 }}
-			>
+			<p class="font-unbounded text-gray text-[32px] text-center">
 				{controls.state && controls.content.title}
 			</p>
 			<br /><br />
-			<p class="text-[18px]" in:fade={{ delay: 400 }} out:fade={{ delay: 0 }}>
+			<p class="text-[18px]" in:fade={{ delay: 400 }}>
 				{controls.state && controls.content.content.desc}
 			</p>
 			{#if data.findIndex((el) => {
 				return el.title === controls.content.title;
 			}) === 0}
-				{#await supabase.storage
+				<!-- {#await supabase.storage
 					.from('Website')
 					.createSignedUrl('This_Journey_Within.flac', 60 * 30) then { data, error }}
 					<div class="mt-10 p-8 shadow-lg rounded-lg flex" transition:fade>
@@ -103,41 +100,40 @@
 								</svg>
 							{/if}
 						</button>
-						<div class="flex justify-center items-center">
-							<audio bind:this={audio}>
-								<source src={data?.signedUrl} type="audio/flac" />
-							</audio>
-							<input
-								max={audio.duration}
-								min={0}
-								bind:this={input}
-								type="range"
-								class="w-full"
-								step="0.01"
-								bind:value={loc}
-								onchange={() => {
-									if (audio) audio.currentTime = (loc / 100) * (audio?.duration ?? 1);
-									loc =
-										((audio?.['currentTime'] ?? 1) / (audio?.['duration'] ?? 1)) *
-										100
-								}}
-							/>
-							<div>
-								<p class="pl-4">
-									{secondsToTime(loc)}
-								</p>
-							</div>
+					</div>
+					<div class="flex justify-center items-center">
+						<audio bind:this={audio}>
+							<source src={data?.signedUrl} type="audio/flac" />
+						</audio>
+						<input
+							max={audio.duration}
+							min={0}
+							bind:this={input}
+							type="range"
+							class="w-full"
+							step="0.01"
+							bind:value={loc}
+							onchange={() => {
+								if (audio) audio.currentTime = (loc / 100) * (audio?.duration ?? 1);
+								loc = ((audio?.['currentTime'] ?? 1) / (audio?.['duration'] ?? 1)) * 100;
+							}}
+						/>
+						<div>
+							<p class="pl-4">
+								{secondsToTime(loc)}
+							</p>
 						</div>
 					</div>
-				{:catch error}
-					<!--- TODO: Refresh tokens/cookies -->
-					<p>{error.message}</p>
-				{/await}
+					<p>{error?.message}</p>
+				{/await} -->
 			{/if}
 		</div>
 	</Drawer>
 </div>
-<slot />
+
+{#if children}
+	{@render children()}
+{/if}
 
 <style>
 	input[type='range'] {
@@ -183,5 +179,16 @@
 		box-shadow: -100vw 0 0 100vw dodgerblue;
 		box-sizing: border-box;
 		border-radius: 4px;
+	}
+
+	:global(body) {
+		margin: 0;
+		overflow-x: hidden;
+		background-color: transparent;
+	}
+
+	main {
+		position: relative;
+		z-index: 1;
 	}
 </style>

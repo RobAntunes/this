@@ -1,19 +1,20 @@
 import AudioPlayer from '$lib/components/AudioPlayer.svelte';
-import { createRoot, untrack } from 'svelte';
+import { mount, untrack } from 'svelte';
 
 const data = [
 	{
 		title: 'Personalized Philosophy Journeys',
 		content: {
 			desc: "Embark on a journey blending philosophy and psychology, tailored to your life. Discover personalized audio sessions and tools for profound insights and self-growth, crafting your unique philosophy for life's challenges.",
-			component: (target: Node, src: { data: { signedUrl: string } | null }) =>
-				createRoot(AudioPlayer, {
-					target,
+			component: (target: Node, src: { data: { signedUrl: string } | null }) => {
+				mount(AudioPlayer, {
+					target: target as Element,
 					props: {
 						src,
 						autoplay: false
 					}
-				})
+				});
+			}
 		}
 	},
 	{

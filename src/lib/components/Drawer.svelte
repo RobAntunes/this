@@ -8,7 +8,7 @@
 		children: () => any;
 	}>();
 
-	let ref: any;
+	let ref: HTMLElement | null = $state(null);
 
 	$effect.root(() => {
 		document.body.addEventListener('click', (e) => {
@@ -38,15 +38,10 @@
 			easing: cubicInOut,
 			axis: 'x'
 		}}
-		out:slide={{
-			delay: 50,
-			easing: cubicInOut,
-			axis: 'x'
-		}}
 		bind:this={ref}
 	>
 		<div class="w-[30em]">
-			{@render children()}
+			{@html content()}
 		</div>
 		<button type="button" onclick={closeDrawer}>
 			<svg
@@ -62,3 +57,7 @@
 		</button>
 	</aside>
 {/if}
+
+{#snippet content()}
+	{children()}
+{/snippet}

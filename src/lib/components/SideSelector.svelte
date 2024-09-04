@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { className, title, idx, ref, openDrawer } = $props<{
+	let { className = '', title = '', idx = 0, ref = null, openDrawer = () => {} } = $props<{
 		className: string;
 		title: string;
 		idx: number;
